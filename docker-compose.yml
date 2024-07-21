@@ -1,0 +1,19 @@
+version: "3"
+services:
+  api-service:
+    build: api-service
+    image: api-service
+    container_name: api-service
+    healthcheck:
+      test: curl -f http://localhost:5000/version || exit 1
+      interval: 5s
+      timeout: 2s
+      retries: 3
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api-service/src:/app
+
+networks:
+  server_network:
+    external: true
